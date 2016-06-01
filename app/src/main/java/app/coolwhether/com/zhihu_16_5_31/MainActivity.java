@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -15,17 +16,28 @@ import java.util.Date;
 import adapter.NewsAdapter;
 import http.ParserData;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener{
     private ListView lv;
     private boolean isConnected;
     private String latest_news_url = " http://news-at.zhihu.com/api/4/news/latest";
     private NewsAdapter adapter;
+    private SwipeRefreshLayout srl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle(getDate());
+
+        srl = (SwipeRefreshLayout) findViewById(R.id.srl);
+        srl.setOnRefreshListener(this);
+        srl.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
         lv = (ListView) findViewById(R.id.main_lv);
         adapter = new NewsAdapter(MainActivity.this,R.layout.news_item_layout);
         lv.setAdapter(adapter);
@@ -36,6 +48,26 @@ public class MainActivity extends Activity {
             new ParserData(adapter).execute(latest_news_url);
         }else{
             Toast.makeText(getApplicationContext(),"without internet",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 使用SwipeRefreshLayout，onRefresh方法实现在断网，恢复网络的更新
+     * 提供缓冲效果
+     */
+    @Override
+    public void onRefresh() {
+        srl.setRefreshing(true);
+        if(isNetworkAvailiable()){
+            new ParserData(adapter, new ParserData.refreshListener() {
+                @Override
+                public void setOnRefresh() {
+                    srl.setRefreshing(false);
+                }
+            }).execute(latest_news_url);
+        }else{
+            Toast.makeText(getApplicationContext(),"without internet",Toast.LENGTH_SHORT).show();
+            srl.setRefreshing(false);
         }
     }
 

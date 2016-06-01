@@ -15,8 +15,15 @@ import app.coolwhether.com.zhihu_16_5_31.News;
 public class ParserData extends AsyncTask<String,Void,List<News>>{
     private NewsAdapter adapter;
     private static final String TAG = "ParserData";
+    public refreshListener listener;
+
     public ParserData(NewsAdapter adapter) {
         this.adapter = adapter;
+    }
+
+    public ParserData(NewsAdapter adapter, refreshListener listener) {
+        this.adapter = adapter;
+        this.listener = listener;
     }
 
     @Override
@@ -39,5 +46,16 @@ public class ParserData extends AsyncTask<String,Void,List<News>>{
     protected void onPostExecute(List<News> newses) {
         //为adapter设置回调，使用newses为list添加内容
         adapter.getNewsList(newses);
+        if (listener != null){
+            listener.setOnRefresh();
+        }
+    }
+
+    /*
+    创建接口refreshListener，实现回调
+    检测内容是否更新完成
+     */
+    public interface refreshListener{
+        void setOnRefresh();
     }
 }
