@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+    <!--没有这句会出错  tools:ignore="AppCompatResource"-->
+    <item
+        android:id="@+id/favourite"
+        android:title="@string/favourite_title"
+        android:showAsAction="always"
+        tools:ignore="AppCompatResource"
+        android:icon="@drawable/fav_normal"
+        />
+    <item
+        android:id="@+id/Setting"
+        android:title="@string/setting_title"
+        android:showAsAction="never"
+        tools:ignore="AppCompatResource"
+        android:orderInCategory="100"
+        />
+</menu>
