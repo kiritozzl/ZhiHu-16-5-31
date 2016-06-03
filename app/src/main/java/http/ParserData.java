@@ -1,6 +1,7 @@
 package http;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 
@@ -34,6 +35,7 @@ public class ParserData extends AsyncTask<String,Void,List<News>>{
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {
+            Log.e(TAG, "doInBackground: -------------------lists"+lists);
             return lists;
         }
     }

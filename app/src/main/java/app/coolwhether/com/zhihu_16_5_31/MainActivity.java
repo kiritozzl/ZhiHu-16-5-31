@@ -2,11 +2,14 @@ package app.coolwhether.com.zhihu_16_5_31;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
 
         srl = (SwipeRefreshLayout) findViewById(R.id.srl);
         srl.setOnRefreshListener(this);
+        //SwipeRefreshLayout设置刷新时显示的颜色
         srl.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -41,6 +45,17 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         lv = (ListView) findViewById(R.id.main_lv);
         adapter = new NewsAdapter(MainActivity.this,R.layout.news_item_layout);
         lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                News news = (News) lv.getItemAtPosition(position);
+                int i = news.getId();
+                String url = latest_news_url + "/" + i;
+                Intent intent = new Intent(MainActivity.this,NewsItem.class);
+                intent.putExtra("url",url);
+                startActivity(intent);
+            }
+        });
 
         isConnected = isNetworkAvailiable();
         if (isConnected){

@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
     public void getNewsList(List<News> listNews){
         clear();
         //为adapter添加值
+        Log.e(TAG, "getNewsList: listNews"+listNews);
         addAll(listNews);
         notifyDataSetChanged();
     }
