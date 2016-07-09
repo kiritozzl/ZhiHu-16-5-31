@@ -1,6 +1,6 @@
 package http;
 
-import android.util.Log;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.coolwhether.com.zhihu_16_5_31.News;
+import items.NewsDetail;
 
 /**
  * Created by Administrator on 2016/6/1.
@@ -67,8 +68,17 @@ public class GsonHelper {
             if (con != null)
                 con.disconnect();
         }
-        Log.e(TAG, "readUrl: -----------------sb:"+sb.toString());
         return sb.toString();
     }
 
+    /**
+     * 把传入的json对象解析为具体的类
+     * @param json
+     * @return
+     * @throws JSONException
+     */
+    public static NewsDetail parseJsonDetail(String json) throws JSONException{
+        Gson gson = new Gson();
+        return gson.fromJson(json,NewsDetail.class);
+    }
 }

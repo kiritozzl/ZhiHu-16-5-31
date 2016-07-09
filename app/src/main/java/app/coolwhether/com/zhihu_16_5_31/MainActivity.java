@@ -45,14 +45,16 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         lv = (ListView) findViewById(R.id.main_lv);
         adapter = new NewsAdapter(MainActivity.this,R.layout.news_item_layout);
         lv.setAdapter(adapter);
+        /**
+         * 设置主页面item点击事件，传入点击item的id
+         */
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 News news = (News) lv.getItemAtPosition(position);
                 int i = news.getId();
-                String url = latest_news_url + "/" + i;
                 Intent intent = new Intent(MainActivity.this,NewsItem.class);
-                intent.putExtra("url",url);
+                intent.putExtra("id",i);
                 startActivity(intent);
             }
         });
