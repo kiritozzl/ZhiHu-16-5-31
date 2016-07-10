@@ -7,7 +7,7 @@ import android.webkit.WebView;
 import org.json.JSONException;
 
 import http.GsonHelper;
-import http.Http;
+import http.Http1;
 import items.NewsDetail;
 
 /**
@@ -26,8 +26,7 @@ public class LoadNewsDetailTask extends AsyncTask<Integer,Void, NewsDetail> {
         NewsDetail newsDetail = null;
         try {
             //通过传入的id，利用Http类来构建完整url
-            newsDetail = GsonHelper.parseJsonDetail(Http.getNewsDetail(params[0]));
-            Log.e(TAG, "doInBackground: newsDetail----"+newsDetail );
+            newsDetail = GsonHelper.parseJsonDetail(Http1.getNewsDetail(params[0]));
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {
@@ -37,6 +36,7 @@ public class LoadNewsDetailTask extends AsyncTask<Integer,Void, NewsDetail> {
 
     @Override
     protected void onPostExecute(NewsDetail newsDetail) {
+        Log.e(TAG, "onPostExecute: newsDetail----"+newsDetail );
         String headImage;
         if (newsDetail.getImage() == null || newsDetail.getImage() == ""){
             headImage = "file:///android_asset/news_detail_header_image.jpg";

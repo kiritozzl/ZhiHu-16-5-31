@@ -1,5 +1,7 @@
 package http;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -49,15 +51,17 @@ public class GsonHelper {
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
         HttpURLConnection con = null;
+        Log.e(TAG, "readUrl: urls---"+urls);
         try {
             url = new URL(urls);
             con = (HttpURLConnection)url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
             if (con.getResponseCode() == HttpURLConnection.HTTP_OK){
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
                 String s;
                 while ((s = br.readLine()) != null){
+                    Log.e(TAG, "readUrl: s----"+s);
                     sb.append(s);
                 }
                 br.close();

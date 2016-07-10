@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle"
+            android:dither="true"><!--Dither（图像的抖动处理，当每个颜色值以低于8位表示时，
+            对应图像做抖动处理可以实现在可显示颜色总数比较低（比如256色）时还保持较好的显示效果：-->
+
+            <corners android:radius="2dp"/>
+            <solid android:color="#ccc"/>
+        </shape>
+    </item>
+
+    <item android:bottom="2dp">
+        <shape android:shape="rectangle"
+               android:dither="true">
+
+            <corners android:radius="2dp"/>
+            <solid android:color="#ccc"/>
+
+            <padding android:bottom="8dp"/>
+            <padding android:left="8dp"/>
+            <padding android:right="8dp"/>
+            <padding android:top="8dp"/>
+        </shape>
+    </item>
+</layer-list>

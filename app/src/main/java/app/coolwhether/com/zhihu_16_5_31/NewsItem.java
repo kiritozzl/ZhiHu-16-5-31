@@ -2,6 +2,7 @@ package app.coolwhether.com.zhihu_16_5_31;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.webkit.WebView;
 
 import task.LoadNewsDetailTask;
@@ -33,5 +34,11 @@ public class NewsItem extends Activity{
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
     }
 }
