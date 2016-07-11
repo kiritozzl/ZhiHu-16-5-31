@@ -1,9 +1,11 @@
 package app.coolwhether.com.zhihu_16_5_31;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/6/1.
  */
-public class News {
+public class News implements Serializable{
     private String title;
     private String img_url;
     private int id;

@@ -1,10 +1,6 @@
 package app.coolwhether.com.zhihu_16_5_31;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
@@ -18,8 +14,9 @@ import java.util.Date;
 
 import adapter.NewsAdapter;
 import http.ParserData;
+import utility.Utility;
 
-public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener{
+public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener,AdapterView.OnItemClickListener{
     private ListView lv;
     private boolean isConnected;
     private String latest_news_url = " http://news-at.zhihu.com/api/4/news/latest";
@@ -45,21 +42,9 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         lv = (ListView) findViewById(R.id.main_lv);
         adapter = new NewsAdapter(MainActivity.this,R.layout.news_item_layout);
         lv.setAdapter(adapter);
-        /**
-         * 设置主页面item点击事件，传入点击item的id
-         */
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                News news = (News) lv.getItemAtPosition(position);
-                int i = news.getId();
-                Intent intent = new Intent(MainActivity.this,NewsItem.class);
-                intent.putExtra("id",i);
-                startActivity(intent);
-            }
-        });
+        lv.setOnItemClickListener(this);
 
-        isConnected = isNetworkAvailiable();
+        isConnected = Utility.isNetworkAvailiable(this);
         if (isConnected){
             //latest_news_url表示的是：AsyncTask<String,Void,List<News>> 里的第一个参数
             new ParserData(adapter).execute(latest_news_url);
@@ -75,7 +60,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     @Override
     public void onRefresh() {
         srl.setRefreshing(true);
-        if(isNetworkAvailiable()){
+        if(Utility.isNetworkAvailiable(MainActivity.this)){
             new ParserData(adapter, new ParserData.refreshListener() {
                 @Override
                 public void setOnRefresh() {
@@ -95,16 +80,6 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         return true;
     }
 
-    /**
-     * 检测当前手机网络是否可用
-     * @return
-     */
-    private boolean isNetworkAvailiable(){
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = manager.getActiveNetworkInfo();
-        return info != null && info.isConnected();
-    }
-
     private String getDate(){
         setContentView(R.layout.activity_main);
         //MMM:简写的英文月份，如：Jun
@@ -112,5 +87,17 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
         SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.date_formate));
         String date = sdf.format(new Date());
         return date;
+    }
+
+    /**
+     * 添加item点击事件
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        NewsItem.startActivity(MainActivity.this,adapter.getItem(position));
     }
 }
