@@ -1,9 +1,11 @@
 package app.coolwhether.com.zhihu_16_5_31;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -77,6 +79,15 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     public boolean onCreateOptionsMenu(Menu menu) {
         //加载自定义的menu菜单
         getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.favourite){
+            Intent intent = new Intent(this,FavouriteItems.class);
+            startActivity(intent);
+        }
         return true;
     }
 

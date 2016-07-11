@@ -1,7 +1,6 @@
 package task;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import android.webkit.WebView;
 
 import org.json.JSONException;
@@ -36,7 +35,6 @@ public class LoadNewsDetailTask extends AsyncTask<Integer,Void, NewsDetail> {
 
     @Override
     protected void onPostExecute(NewsDetail newsDetail) {
-        Log.e(TAG, "onPostExecute: newsDetail----"+newsDetail );
         String headImage;
         if (newsDetail.getImage() == null || newsDetail.getImage() == ""){
             headImage = "file:///android_asset/news_detail_header_image.jpg";
@@ -55,7 +53,6 @@ public class LoadNewsDetailTask extends AsyncTask<Integer,Void, NewsDetail> {
         String mNewsContent = "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_content_style.css\"/>"
                 + "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_header_style.css\"/>"
                 + newsDetail.getBody().replace("<div class=\"img-place-holder\">", sb.toString());
-        Log.e(TAG, "onPostExecute: mNewsContent---"+mNewsContent);
         webView.loadDataWithBaseURL("file:///android_asset/",mNewsContent,"text/html","UTF-8",null);
     }
 }

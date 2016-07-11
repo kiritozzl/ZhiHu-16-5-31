@@ -18,6 +18,8 @@
         </activity>
 
         <activity android:name=".NewsItem"/>
+        <activity android:name=".FavouriteItems"/>
+
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>

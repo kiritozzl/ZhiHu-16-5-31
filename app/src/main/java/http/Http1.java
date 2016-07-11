@@ -1,5 +1,7 @@
 package http;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +15,7 @@ public class Http1 {
     public static String NEWSLIST_LATEST = "http://news-at.zhihu.com/api/4/news/latest";
     public static String STORY_VIEW = "http://daily.zhihu.com/story/";
     public static String NEWSDETAIL = "http://news-at.zhihu.com/api/4/news/";
-
+    private static final String TAG = "Http1";
 
     public static String get(String urlAddr) throws IOException {
         HttpURLConnection con = null;
@@ -32,6 +34,7 @@ public class Http1 {
                     response.append(inputLine);
                 }
                 in.close();
+                Log.e(TAG, "get: response.toString()----"+response.toString());
                 return response.toString();
             } else {
                 throw new IOException("Network Error - response code: " + con.getResponseCode());

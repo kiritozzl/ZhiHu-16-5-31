@@ -32,6 +32,13 @@ public class NewsAdapter extends ArrayAdapter<News> {
         this.context = context;
     }
 
+    public NewsAdapter(Context context, int resource,List<News> newsList) {
+        super(context, resource,newsList);
+        inflater = LayoutInflater.from(context);
+        this.resource = resource;
+        this.context = context;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         viewHolder holder;
