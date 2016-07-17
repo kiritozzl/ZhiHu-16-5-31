@@ -24,6 +24,7 @@ public class FavouriteItems extends Activity implements AdapterView.OnItemClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_favourite);
         lv = (ListView) findViewById(R.id.favourite_list);
+        //加载newsList，获取favourite数据
         newsList = DailyNewsDb.getInstance(this).loadFavourite();
         adapter = new NewsAdapter(this,R.layout.news_item_layout,newsList);
 
@@ -31,6 +32,13 @@ public class FavouriteItems extends Activity implements AdapterView.OnItemClickL
         lv.setOnItemClickListener(this);
     }
 
+    /**
+     * 实现点击item跳转到具体新闻内容
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         NewsItem.startActivity(this,adapter.getItem(position));

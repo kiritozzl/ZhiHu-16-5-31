@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -33,7 +32,6 @@ public class NewsItem extends Activity{
         isFavourite = DailyNewsDb.getInstance(this).isFavourite(news);
         //异步加载url
         new LoadNewsDetailTask(webView).execute(news.getId());
-        Log.e(TAG, "onCreate: isFavourite----"+isFavourite);
     }
 
     /*

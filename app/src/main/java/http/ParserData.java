@@ -1,7 +1,6 @@
 package http;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONException;
 
@@ -13,7 +12,7 @@ import app.coolwhether.com.zhihu_16_5_31.News;
 /**
  * Created by Administrator on 2016/6/1.
  */
-public class ParserData extends AsyncTask<String,Void,List<News>>{
+public class ParserData extends AsyncTask<Void,Void,List<News>>{
     private NewsAdapter adapter;
     private static final String TAG = "ParserData";
     public refreshListener listener;
@@ -28,14 +27,13 @@ public class ParserData extends AsyncTask<String,Void,List<News>>{
     }
 
     @Override
-    protected List<News> doInBackground(String... params) {
+    protected List<News> doInBackground(Void... params) {
         List<News> lists = null;
         try {
-            lists = GsonHelper.getListNews(params[0]);
+            lists = GsonHelper.getListNews(Http1.getLastNewsList());
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {
-            Log.e(TAG, "doInBackground: -------------------lists"+lists);
             return lists;
         }
     }

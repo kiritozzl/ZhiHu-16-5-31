@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZhiHu-16-5-31</string>
+    <string name="app_name">simple zhihu daily news</string>
     <string name="date_formate">yyyy,MMM,dd,EEE</string>
     <string name="favourite_title">Favourite</string>
     <string name="setting_title">Setting</string>

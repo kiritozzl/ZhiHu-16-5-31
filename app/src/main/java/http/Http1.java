@@ -26,7 +26,7 @@ public class Http1 {
             con.setRequestProperty("User-Agent", "Mozilla/5.0");
 
             if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(),"utf-8"));
                 String inputLine;
                 StringBuilder response = new StringBuilder();
 

@@ -21,8 +21,6 @@
 
         <TextView
             android:id="@+id/lv_tv"
-            android:layout_toRightOf="@id/lv_iv"
-            android:gravity="center|left"
             android:textSize="15sp"
             android:padding="8dp"
             android:layout_width="match_parent"

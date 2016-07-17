@@ -21,7 +21,6 @@ import utility.Utility;
 public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener,AdapterView.OnItemClickListener{
     private ListView lv;
     private boolean isConnected;
-    private String latest_news_url = " http://news-at.zhihu.com/api/4/news/latest";
     private NewsAdapter adapter;
     private SwipeRefreshLayout srl;
 
@@ -48,10 +47,9 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
 
         isConnected = Utility.isNetworkAvailiable(this);
         if (isConnected){
-            //latest_news_url表示的是：AsyncTask<String,Void,List<News>> 里的第一个参数
-            new ParserData(adapter).execute(latest_news_url);
+            new ParserData(adapter).execute();
         }else{
-            Toast.makeText(getApplicationContext(),"without internet",Toast.LENGTH_SHORT).show();
+            Utility.alertNoNetwork(this);
         }
     }
 
@@ -68,7 +66,7 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
                 public void setOnRefresh() {
                     srl.setRefreshing(false);
                 }
-            }).execute(latest_news_url);
+            }).execute();
         }else{
             Toast.makeText(getApplicationContext(),"without internet",Toast.LENGTH_SHORT).show();
             srl.setRefreshing(false);
@@ -92,7 +90,6 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
     }
 
     private String getDate(){
-        setContentView(R.layout.activity_main);
         //MMM:简写的英文月份，如：Jun
         //EEE:简写的英文星期，如：Wed
         SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.date_formate));
